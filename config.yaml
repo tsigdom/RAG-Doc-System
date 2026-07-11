@@ -1,0 +1,43 @@
+# config.yaml
+app:
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+
+embedding:
+  model_name: "BAAI/bge-small-en-v1.5"
+  device: "cpu"  # 或 "cuda"
+  batch_size: 32
+
+vectorstore:
+  persist_directory: "./data/chroma_db"
+  collection_name: "doc_chunks"
+
+chunking:
+  chunk_size: 512
+  chunk_overlap: 50
+  # 标题继承：采用Markdown头部层级，或自定义规则
+
+retrieval:
+  hybrid_weight: 0.5           # 向量与BM25权重比例
+  top_k: 10
+  rerank_model: "BAAI/bge-reranker-small"  # 可选
+  rerank_top_k: 5
+
+generation:
+  model: "qwen-turbo"          # 通义千问
+  temperature: 0.1
+  max_tokens: 1024
+  stream: true
+
+memory:
+  window_size: 5               # 保留最近5轮对话
+
+logging:
+  level: "INFO"
+  file: "./logs/app.log"
+  rotation: "10 MB"
+
+retry:
+  max_attempts: 3
+  backoff_factor: 1.0
